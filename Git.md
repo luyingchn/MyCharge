@@ -120,8 +120,11 @@ git status 和git diff两个命令来扫描工作区改动，会更新.git/index
 ## 本地仓库的操作
 
 git reset Head    意思是master树替换index树？？？
+
 git rm --cached <file> 删除暂存区文件
+  
 git checkout. 或者git checkout -- <file> 暂存区文件代替工作区文件 危险操作
+  
 git checkout. HEAD 或者git chekout <file> HEAD之乡的master分支文件替换缓存区和工作区文件 极度危险 
 
 
