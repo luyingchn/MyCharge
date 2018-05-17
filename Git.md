@@ -66,6 +66,63 @@ git config -e --system
 
 注意优先级，最高的是库级别的，这样可以让库 覆盖 用户 覆盖 系统
 
+提交补充
+
+--amend
+--allow-empty
+-- reset-author
+
+git log --pretty=fuller 查看提交日志
+
+推送 git push origin master
+
+比较本地与暂存区（commit后，push前？）
+
+git diff
+
+查看精简日志
+
+git log --pretty=oneline
+
+查看精简提交状态
+
+git status -s
+
+git clone 备份???
+
+## 暂存区
+
+先说明一点，暂存区即add 进去
+
+commit则到本地库master
+
+这些操作都是本地的代码管理，不依赖服务器和网络
+
+git log --stat 查看变更统计的log
+
+修改文件后的提交 add，commit（不能直接commit）
+
+git diff 比较工作区和暂存区差异，没有add的？
+
+git diff HEAD 比较 工作区和本地库差异 所有文件差异？
+
+所以如果一次修改add操作过，这两种diff结果一样
+
+git status 绿色字表示你已经add到暂存区了，红色的字表示当前修改还没有add进暂存区，或者是新文件（即Untracked）
+
+git diff --staged
+git diff --cacehd
+
+比较暂存区和本地库的差异，即add的但没有commit的？
+
+
+
+
+
+
+
+
+
 
 
 
