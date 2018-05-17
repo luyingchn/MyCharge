@@ -1,11 +1,13 @@
 ## 配置部分
 
-git --version 
-查看版本
+git --version      
+查看版本    
 
-git config --global user.name "luy"
-git config --global user.email "luyingchn@gmail.com"
-配置个git账户和邮件
+git config --global user.name "luy"  
+
+git config --global user.email "luyingchn@gmail.com"    
+
+配置个git账户和邮件    
 
 git config --global alias.br branch
 设置简洁命令br代替branch
