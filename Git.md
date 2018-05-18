@@ -125,7 +125,49 @@ git rm --cached <file> 删除暂存区文件
   
 git checkout. 或者git checkout -- <file> 暂存区文件代替工作区文件 危险操作
   
-git checkout. HEAD 或者git chekout <file> HEAD之乡的master分支文件替换缓存区和工作区文件 极度危险 
+git checkout. HEAD 或者git chekout <file> HEAD指向的master分支文件替换缓存区和工作区文件 极度危险 
+  
+git clean -fd 清除工作区非跟踪文件和目录，新增文件，如果只是修改文件，不会清除
+  
+## Git Diff
+工作区，暂存区，版本库 都对应一套目录树，工作区很直观可以看到
+
+版本库查看可以使用这个命令 git ls-tree -l HEAD
+
+暂存区用 git ls-files -s
+
+或者先将目录树写入Git对象库
+
+git write-tree 获取tree-id
+
+再 git ls-tree -l tree-id ,这里的tree-id可以不用写全
+
+工作区和暂存区比较 git diff
+
+暂存区和HEAD比较 git diff -cached HEAD ，HEAD 可以省略
+
+工作区和HEAD 比较 git diff HEAD, HEAD 可以用master
+
+## git commit -a 
+前面提到过提交如果不add，会失败 那么这个-a就可以强制绕过暂存区做提交，然而这样会丢弃暂存区带来的控制能力
+
+## git status
+
+基础命令最后一个就是git status 
+这里会涉及到暂存区的处理和master分支机制，为此先暂停一段落
+
+git stash 保存进度
+
+
+
+
+
+
+
+
+
+
+
 
 
 
