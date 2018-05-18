@@ -330,7 +330,29 @@ git merge current-head-id
 
 git cat-file -p HEAD 打印出看到两个父提交，因为合并了分支所以都是作为当前提交的父提交
 
-### 深入
+### 深入git cehckout
+
+带路径 不会改变HEAD头指针，会覆盖工作区，如果commit ，则暂存区也被覆盖
+
+不带路径  会改变HEAD头指针 ，可用来切换到分支或者创建新分支
+
+常见命令
+
+git checkout branch
+
+git checkout HEAD
+
+git checkout -- filename
+
+git checkout .(省略 --)
+
+## 继续之前保存进度操作
+
+
+
+
+
+
 
 
 
