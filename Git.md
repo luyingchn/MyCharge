@@ -262,6 +262,50 @@ HEAD^^^^^ 缩写 ~n（即这里5）
 
 ## Git重置
 
+commit 操作会让master指向新的提交，git使用reset命令让游标可以指向任意存在的提交id
+
+--hard参数会破坏工作区未提交改动
+
+git reset --hard HEAD^ 指向上一次老的提交
+
+git reset --hard 9e8a761  指向该id的提交（查询提交id用 git log --graph --oneline）
+
+重置后，不能通过查找历史提交的方法找到丢弃的提交id，因为log也丢失了（log没打印，但是对象库中依然存在）
+
+### reflog
+
+带有工作区的版本库都有提供分支日志功能
+
+git config core.logallrefupdates  打印true
+
+直接查看分支日志文件
+
+tail -5 .git/logs/refs/heads/master
+
+reflog提供了操作，其中show命令可以实现与上面那个命令一样的功能，并且会提供一个便捷的表达式master@{n}
+
+git reflog show master |head -5
+
+这时候追踪到了id改变，利用表达式即可重置
+
+git reset --hard master@{2} 重置操作会让版本库的文件替换暂存区和工作区文件，git log也会恢复记录
+
+当然reset的这次记录也会记录在master日志中
+
+### 深入reset
+
+有paths路径的reset命令，不会重置引用以及改变工作区，只会让commit下的文件替换暂存区的文件，相当于add命令的取消操作
+
+没有paths路径的，会重置引用，包括
+
+--hard 替换引用指向；替换暂存区；替换工作区
+
+--soft 只替换引用指向
+
+--mixed （或者省略） 替换引用指向；替换暂存区
+
+## Git检出
+
 
 
 
