@@ -306,6 +306,32 @@ git reset --hard master@{2} 重置操作会让版本库的文件替换暂存区�
 
 ## Git检出
 
+一般地，HEAD 文件内容是固定的，即指向分支master，但如果使用以下指令
+
+git checkout master-id
+
+会让HEAD文件内容改成一个具体的id，且id值并非master分支之前的id，是上次提交的id
+
+这种时候如果做提交操作，除了有警告，发现新的提交建立在当前head指向的提交id上
+
+进一步，切换到master分支 git checkout master
+
+上次提交居然没了，包括log也不见了，但是通过上次提交的id可以在版本库中找到，但因为没有分支跟踪，所以一旦reflog中日志过期，这次提交将永远从版本库清除
+
+如果需要保留这次修改，可以使用下面的指令 
+
+git merge current-head-id 
+
+通过日志查看 git log --graph --pretty=oneline 
+
+发现master和要保留的这个提交都作为开发分支，merge操作合并了这次操作，并生成新id
+
+（reset,checkout 都不会产生新id，merge会）
+
+git cat-file -p HEAD 打印出看到两个父提交，因为合并了分支所以都是作为当前提交的父提交
+
+### 深入
+
 
 
 
