@@ -158,6 +158,118 @@ git write-tree 获取tree-id
 
 git stash 保存进度
 
+## Git对象
+
+打印提交id
+
+git log -l --pretty=raw
+
+一般，一个提交包含三个id，分别是commit本次提交，tree本次提交对应的目录树，parent上次提交
+
+可以使用下面格式的命令查看类型（-t）或者内容（-p）
+
+git cat-file -t id
+
+git cat-file -p id
+
+注意上面的id需要用sha1哈西串代替，可以写一部分
+
+所以对象库的内部关系，可以描述为 每次commit都对应一个当前id，包含目录树id，上次提交id，通过上次提交id可以追溯上次提交的目录树等，进而形成一个链条，如果追溯到一次提交没有parent id，则这次提交就是第一次提交  然后每次提交对应的tree id，包含至少一个blob对象，每个对象对应一条内容id和内容信息
+
+无论是commit(parent也是commit),tree,blob，都是对象库中的具有id标识的对象，其中id前2位作为objects目录下的子目录名，后38位则是目录下的文件名
+
+## HEAD和master
+
+精简（simple）显示，同时输出分支（branch）名称 git status -s -b 
+
+git branch 则可以显示分支
+
+查log可以用下面命令，发现输出一样
+
+git log -l HEAD
+
+git log -l refs/heads/master
+
+去.git目录查看
+
+find .git -nmae HEAD -o -name master
+
+输出有四个路径，暂不看logs下的，则
+
+./git/HEAD
+
+./git/refs/heads/master （可以简写master）
+
+显示HEAD内容 cat .git/HEAD
+
+ref:refs/heads/master
+
+就是说HEAD指向一个引用，看下master文件内容
+
+cat .git/refs/heads/master
+
+是一个id，用cat-file查看类型和内容，发现是最新一次提交的id，因此可以建立一次历史跟踪链，追踪整个提交历史
+
+.git/refs是保存引用的命名空间，heads目录下的引用称为分支，可以用下面命令显示引用对应提交id
+
+git rev-parse HEAD
+
+git rev-parse refs/heads/master (可以简写master)
+
+所以问题来了，上面一直提到的40位id是什么，下面看
+
+### commit
+
+以最新提交作为comiit
+
+HEAD 对应id的提交内容 git cat-file commit HEAD
+
+内容大小 git cat-file commit HEAD |wc -c     打印出199
+
+拿到大小后执行下面的哈西算法 ( printf "commit 199\000"; git cat-file commit HEAD )| sha1sum
+
+发现这个值正是HEAD 的id
+
+### blob
+
+内容 git cat-file blob HEAD:second.txt
+
+大小: git cat-file blob HEAD: second.txt |wc -c  打印出 24
+
+哈西: ( printf "blob 24\000"; git cat-file blob HEAD:second.txt )| sha1sum
+
+对比： git rev-parse HEAD: second.txt
+
+### tree
+
+大小: git cat-file tree HEAD^(tree) |wc -c 如打印出39
+
+哈西: ( printf "tree 39\000"; git cat-file blob HEAD^(tree) )| sha1sum
+
+对比: git rev-parse HEAD^(tree)
+
+最后，给出访问git库中对象的指令
+
+最近一次提交 HEAD
+
+父提交 ^
+
+父提交的第三个父提交 HEAD^^3 
+
+HEAD^^^^^ 缩写 ~n（即这里5）
+
+暂存区  :path/to/file
+
+## Git重置
+
+
+
+
+
+
+
+
+
 
 
 
